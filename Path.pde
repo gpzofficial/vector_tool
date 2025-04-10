@@ -28,6 +28,8 @@ public class Path extends Obj
   
   protected void _init()
   {
+    myType = ObjType.PATH_TYPE;
+    
     selection_type = 0;
     selection_index = 0;
     xList = new ArrayList<Float>();
@@ -403,6 +405,28 @@ public class Path extends Obj
   
   // ************ END OF SHOW()
   
+  }
+  
+  public ArrayList<Float> Path_Get(int listType)
+  {
+    switch(listType)
+    {
+      case 1:
+        return xList;
+      case 2:
+        return yList;
+      case 3:
+        return xc1List;
+      case 4:
+        return yc1List;
+      case 5:
+        return xc2List;
+      case 6:
+        return yc2List;
+      default:
+        return xList;
+      
+    }
   }
   
   

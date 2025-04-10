@@ -18,6 +18,8 @@ public abstract class Obj
   public abstract void Proc();
   public abstract void Show();
   
+  public abstract ArrayList<Float> Path_Get(int listType);
+  
   
   
   

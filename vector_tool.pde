@@ -2,6 +2,9 @@ import processing.javafx.*;
 import java.util.ArrayList;
 
 private boolean is_keypressed;
+private boolean saveSc;
+
+private SvgExport svgExport;
 
 public ArrayList<Obj> objs;
 
@@ -18,8 +21,11 @@ void setup()
   frameRate(120);
   pixelDensity(2);
   
+  svgExport = new SvgExport();
+  
   objs = new ArrayList<Obj>();
   lC = new LayerControl();
+  saveSc = false;
   
   mainFont = loadFont("aqum.vlw");
   
@@ -66,6 +72,14 @@ void draw()
         {
           objs.get(curLayer).Clear();
         }
+    }
+    else if(key == 'p')
+    {
+      svgExport.Export(objs);
+    }
+    else if(key == 'u')
+    {
+      saveSc = true;
     }
   }
   else if(!keyPressed && is_keypressed)
@@ -115,7 +129,14 @@ void draw()
   }
   noStroke();
   
+  if(saveSc)
+  {
+    saveSc = false;
+    saveFrame();
+  }
+  
   lC.Show(curLayer);
+  
   
   textAlign(LEFT, BOTTOM);
   fill(#FFFFFF);
@@ -125,10 +146,13 @@ void draw()
   textFont(mainFont);
   
   textSize(20);
-  text(key + " " + curLayer + " " + lC.getVertScroll(), 25, height - 25);
+  
+  String bruh = "VECDOG | " + key + " " + curLayer + " " + lC.getVertScroll();
+  
+  text(bruh, 25, height - 25);
   
   textSize(10);
-  text("vector editing tool test", 30 + 2 * textWidth("gpzofficial"), height - 25);
+  text("prealpha", 35 + 2 * textWidth(bruh), height - 25);
   
   
 }
