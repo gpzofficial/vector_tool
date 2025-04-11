@@ -81,6 +81,10 @@ void draw()
     {
       saveSc = true;
     }
+    else if(key == 'e')
+    {
+      
+    }
   }
   else if(!keyPressed && is_keypressed)
   {
@@ -120,7 +124,17 @@ void draw()
   
   
   
+  if(objs.size() < 1)
+  {
+    textAlign(CENTER, CENTER);
+    fill(#FFAB00);
+    textFont(mainFont);
   
+    textSize(20);
+    
+    text("Press A to add layer.", width / 2, height / 2);
+    
+  }
   
   
   for(int i = 0; i < objs.size(); i++)
@@ -164,5 +178,5 @@ public void Vt_Obj_Disable()
 
 void mouseWheel(MouseEvent event)
 {
-  lC.vertScroll(event.getCount());
+  lC.vertScroll(event.getCount() * 2);
 }

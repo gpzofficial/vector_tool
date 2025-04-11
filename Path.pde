@@ -120,6 +120,14 @@ public class Path extends Obj
     }
   }
   
+  public void Path_EngageControlPoint()
+  {
+    xc1List.set(selection_index, xList.get(selection_index) - 30);
+    yc1List.set(selection_index, yList.get(selection_index) - 30);
+    xc2List.set(selection_index, xList.get(selection_index) + 30);
+    yc2List.set(selection_index, yList.get(selection_index) + 30);
+  }
+  
   public void Proc()
   {
     if(is_active)

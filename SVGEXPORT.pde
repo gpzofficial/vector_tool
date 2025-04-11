@@ -17,7 +17,6 @@ public class SvgExport
     output += header;
     for(int i = 0; i < objs.size(); i++)
     {
-      output += "<path\nd = \"";
       Obj obj = objs.get(i);
       ArrayList<Float> x = obj.Path_Get(1);
       ArrayList<Float> y = obj.Path_Get(2);
@@ -25,6 +24,14 @@ public class SvgExport
       ArrayList<Float> yc1 = obj.Path_Get(4);
       ArrayList<Float> xc2 = obj.Path_Get(5);
       ArrayList<Float> yc2 = obj.Path_Get(6);
+      
+      if(x.size() < 2)
+      {
+        continue;
+      }
+      else
+      {
+      output += "<path\nd = \"";
       for(int j = 1; j < x.size(); j++)
       {
         if(j == 1)
@@ -41,8 +48,10 @@ public class SvgExport
         output += (x.get(j) + " " + y.get(j) + ", ");
         }
         
+        
       }
       output += ("\"\nstroke = \"black\"\nfill = \"white\" />\n");
+      }
     }
     output += footer;
     

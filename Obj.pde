@@ -19,6 +19,7 @@ public abstract class Obj
   public abstract void Show();
   
   public abstract ArrayList<Float> Path_Get(int listType);
+  public abstract void Path_EngageControlPoint();
   
   
   
