@@ -6,11 +6,18 @@ public class LayerControl
   
   private final int layerVertLimit = 8;
   
+  private final float xOutOffset = 90;
+  private float currentXPos = width + 90;
+  private AddButton addButton;
+  
+  private boolean is_revealed = false;
+  
   
   public LayerControl()
   {
     lCB = new ArrayList<LayerControlButton>();
     verticalPosition = 0;
+    addButton = new AddButton(currentXPos, height - 90);
   }
   
   public void Add(int layer)
@@ -54,12 +61,37 @@ public class LayerControl
     
     int acc = -1;
     
+    if(!is_revealed)
+    {
+      if(mouseX >= width - xOutOffset / 2)
+      {
+        is_revealed = true;
+      }
+      else
+      {
+        currentXPos = Eases.EasesProc(EaseType.EXPONENT, currentXPos, width + xOutOffset, 9.0);
+      }
+      
+    }
+    else
+    {
+      if(mouseX <= width - xOutOffset * 2)
+      {
+        is_revealed = false;
+      }
+      else
+      {
+        currentXPos = Eases.EasesProc(EaseType.EXPONENT, currentXPos, width - xOutOffset, 9.0);
+      }
+      
+    }
     
+    addButton.SetXPos(currentXPos);
     
     
     for(int i = 0; i < lCB.size(); i++)
     {
-      acc = lCB.get(i).Proc(1190, 360 + 25 * (lCB.size() - 1) - i * 50 - verticalPosition);
+      acc = lCB.get(i).Proc(currentXPos, 360 + 25 * (lCB.size() - 1) - i * 50 - verticalPosition);
       if(acc != -1)
       {
         break;
@@ -68,7 +100,7 @@ public class LayerControl
     
     if(mousePressed && acc == -1)
     {
-      if(mouseX >= 1190 - 40 && mouseX <= 1190 + 40)
+      if(mouseX >= currentXPos - 40 && mouseX <= currentXPos + 40)
       {
         if(mouseY >= 360 - (30 + 25 * (lCB.size() - 1)) && mouseY <= 360 + (30 + 25 * (lCB.size() - 1)))
         {
@@ -92,15 +124,15 @@ public class LayerControl
     fill(#FFA600);
     if(lCB.size() < 1)
     {
-      rect(1190, 360, 80, 60, 25);
+      rect(currentXPos, 360, 80, 60, 25);
     }
     else if(lCB.size() >= 1 && lCB.size() < layerVertLimit)
     {
-      rect(1190, 360, 80, 60 + 50 * (lCB.size() - 1), 25);
+      rect(currentXPos, 360, 80, 60 + 50 * (lCB.size() - 1), 25);
     }
     else
     {
-      rect(1190, 360, 80, 60 + 50 * (layerVertLimit - 1), 25);
+      rect(currentXPos, 360, 80, 60 + 50 * (layerVertLimit - 1), 25);
     }
     
     
@@ -110,21 +142,29 @@ public class LayerControl
       {
         
         lCB.get(i).setSize(60, 40 + 2 * (25 * (lCB.size() - 1) - i * 50 - verticalPosition + (30 + 25 * (layerVertLimit - 2)))   );
-        lCB.get(i).Show(1190, 360 + 25 * (lCB.size() - 1) - i * 50 - verticalPosition, activeLayer);
+        lCB.get(i).Show(currentXPos, 360 + 25 * (lCB.size() - 1) - i * 50 - verticalPosition, activeLayer);
       }
       else if(25 * (lCB.size() - 1) - i * 50 - verticalPosition >= (30 + 25 * (layerVertLimit - 2)))
       {
         
         lCB.get(i).setSize(60, 40 + 2 * (-1 * (25 * (lCB.size() - 1) - i * 50 - verticalPosition) + (30 + 25 * (layerVertLimit - 2)))   );
-        lCB.get(i).Show(1190, 360 + 25 * (lCB.size() - 1) - i * 50 - verticalPosition, activeLayer);
+        lCB.get(i).Show(currentXPos, 360 + 25 * (lCB.size() - 1) - i * 50 - verticalPosition, activeLayer);
       }
       else
       {
         lCB.get(i).setSize(60, 40);
-        lCB.get(i).Show(1190, 360 + 25 * (lCB.size() - 1) - i * 50 - verticalPosition, activeLayer);
+        lCB.get(i).Show(currentXPos, 360 + 25 * (lCB.size() - 1) - i * 50 - verticalPosition, activeLayer);
       }
       
     }
+    
+    addButton.Show();
+    
+  }
+  
+  public AddButton LC_GetAddButton()
+  {
+    return addButton;
   }
   
 }

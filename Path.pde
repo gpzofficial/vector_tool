@@ -265,6 +265,16 @@ public class Path extends Obj
     case 1:
     xc1List.set(selection_index, float(mouseX));
     yc1List.set(selection_index, float(mouseY));
+    if(selection_index == xList.size() - 1)
+    {
+      xc1List.set(1, float(mouseX));
+      yc1List.set(1, float(mouseY));
+    }
+    else if(selection_index == 1)
+    {
+      xc1List.set(xList.size() - 1, float(mouseX));
+      yc1List.set(xList.size() - 1, float(mouseY));
+    }
     break;
     
     
@@ -272,6 +282,16 @@ public class Path extends Obj
     
     xc2List.set(selection_index, float(mouseX));
     yc2List.set(selection_index, float(mouseY));
+    if(selection_index == xList.size() - 1)
+    {
+      xc2List.set(1, float(mouseX));
+      yc2List.set(1, float(mouseY));
+    }
+    else if(selection_index == 1)
+    {
+      xc2List.set(xList.size() - 1, float(mouseX));
+      yc2List.set(xList.size() - 1, float(mouseY));
+    }
     break;
     
     case 3:

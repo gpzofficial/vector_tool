@@ -6,7 +6,13 @@ private boolean saveSc;
 
 private SvgExport svgExport;
 
+private int interactionLayer;
+
+private float vecdogInfoYPos;
+private boolean is_vecdogRevealed;
+
 public ArrayList<Obj> objs;
+private AddButton addButton;
 
 public LayerControl lC;
 
@@ -21,7 +27,13 @@ void setup()
   frameRate(120);
   pixelDensity(2);
   
+  interactionLayer = 0;
+  
   svgExport = new SvgExport();
+  addButton = new AddButton(width - 90, height - 90);
+  
+  vecdogInfoYPos = height - 25;
+  is_vecdogRevealed = false;
   
   objs = new ArrayList<Obj>();
   lC = new LayerControl();
@@ -35,10 +47,14 @@ void draw()
 {
   int selectLayer = -1;
   background(#FFF9E4);
+  
+  if(interactionLayer == 0)
+  {
+  
   if(keyPressed && !is_keypressed)
   {
     is_keypressed = true;
-    if(key == 'a')
+    if(key == 'a' && false)
     {
       for(int i = 0; i < objs.size(); i++)
       {
@@ -83,17 +99,56 @@ void draw()
     }
     else if(key == 'e')
     {
-      
+      if(curLayer != -1)
+      {
+        objs.get(curLayer).Path_EngageControlPoint();
+      }
     }
   }
   else if(!keyPressed && is_keypressed)
   {
     is_keypressed = false;
   }
-  
+  if(lC.LC_GetAddButton().Proc())
+  {
+    for(int i = 0; i < objs.size(); i++)
+      {
+        objs.get(i).Deselect();
+      }
+      Obj newObj = new Path();
+      objs.add(newObj);
+      System.out.println(objs.size());
+      lC.Add(objs.size() - 1);
+      curLayer = objs.size() - 1;
+  }
   selectLayer = lC.Proc();
   
-  
+  if(!is_vecdogRevealed)
+    {
+      if(mouseY >= height - 25)
+      {
+        is_vecdogRevealed = true;
+        println("cccc");
+      }
+      else
+      {
+        vecdogInfoYPos = Eases.EasesProc(EaseType.EXPONENT, vecdogInfoYPos, height + 25, 9.0);
+      }
+      
+    }
+    else
+    {
+      if(mouseY <= height - 25 * 2)
+      {
+        is_vecdogRevealed = false;
+        println("dddd");
+      }
+      else
+      {
+        vecdogInfoYPos = Eases.EasesProc(EaseType.EXPONENT, vecdogInfoYPos, height - 25, 9.0);
+      }
+      
+    }
   
   if(selectLayer == -1)
   {
@@ -122,6 +177,8 @@ void draw()
     
   }
   
+  }
+  
   
   
   if(objs.size() < 1)
@@ -132,7 +189,7 @@ void draw()
   
     textSize(20);
     
-    text("Press A to add layer.", width / 2, height / 2);
+    text("Click add button to add layer.", width / 2, height / 2);
     
   }
   
@@ -151,7 +208,6 @@ void draw()
   
   lC.Show(curLayer);
   
-  
   textAlign(LEFT, BOTTOM);
   fill(#FFFFFF);
   circle(mouseX, mouseY, 20);
@@ -163,10 +219,12 @@ void draw()
   
   String bruh = "VECDOG | " + key + " " + curLayer + " " + lC.getVertScroll();
   
-  text(bruh, 25, height - 25);
+  
+  
+  text(bruh, 25, vecdogInfoYPos);
   
   textSize(10);
-  text("prealpha", 35 + 2 * textWidth(bruh), height - 25);
+  text("prealpha", 35 + 2 * textWidth(bruh), vecdogInfoYPos);
   
   
 }
