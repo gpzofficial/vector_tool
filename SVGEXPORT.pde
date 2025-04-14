@@ -1,6 +1,7 @@
 public class SvgExport
 {
   private final String header = "<svg width=\"1080\" height=\"720\" xmlns=\"http://www.w3.org/2000/svg\">\n";
+  private final String detector = "<!--VCDG@GPZ-->\n";
   private final String footer = "\n</svg>";
   
   public SvgExport()
@@ -15,6 +16,7 @@ public class SvgExport
     String output = "";
     
     output += header;
+    output += detector;
     for(int i = 0; i < objs.size(); i++)
     {
       Obj obj = objs.get(i);

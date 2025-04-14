@@ -8,6 +8,7 @@ public class LayerControl
   
   private final float xOutOffset = 90;
   private float currentXPos = width + 90;
+  private float tYPos = height / 2;
   private AddButton addButton;
   
   private boolean is_revealed = false;
@@ -34,6 +35,15 @@ public class LayerControl
   
   public void vertScroll(float count)
   {
+    if(mouseX >= currentXPos - 40 && mouseX <= currentXPos + 40)
+      {
+        if(mouseY >= tYPos - (30 + 25 * (lCB.size() - 1)) && mouseY <= tYPos + (30 + 25 * (lCB.size() - 1)))
+        {
+          
+        }
+        else return;
+      }
+      else return;
     
     if(lCB.size() >= layerVertLimit)
     {
@@ -56,6 +66,7 @@ public class LayerControl
   
   public int Proc()
   {
+    tYPos = height / 2;
     rectMode(CENTER);
     
     
@@ -86,12 +97,12 @@ public class LayerControl
       
     }
     
-    addButton.SetXPos(currentXPos);
+    addButton.SetPos(currentXPos, height - 90);
     
     
     for(int i = 0; i < lCB.size(); i++)
     {
-      acc = lCB.get(i).Proc(currentXPos, 360 + 25 * (lCB.size() - 1) - i * 50 - verticalPosition);
+      acc = lCB.get(i).Proc(currentXPos, tYPos + 25 * (lCB.size() - 1) - i * 50 - verticalPosition);
       if(acc != -1)
       {
         break;
@@ -102,14 +113,14 @@ public class LayerControl
     {
       if(mouseX >= currentXPos - 40 && mouseX <= currentXPos + 40)
       {
-        if(mouseY >= 360 - (30 + 25 * (lCB.size() - 1)) && mouseY <= 360 + (30 + 25 * (lCB.size() - 1)))
+        if(mouseY >= tYPos - (30 + 25 * (lCB.size() - 1)) && mouseY <= tYPos + (30 + 25 * (lCB.size() - 1)))
         {
           acc = -2;
         }
       }
     }
     
-    if(mouseY >= 360 - (30 + 25 * (lCB.size() - 1)) && mouseY <= 360 + (30 + 25 * (lCB.size() - 1)))
+    if(mouseY >= tYPos - (30 + 25 * (lCB.size() - 1)) && mouseY <= tYPos + (30 + 25 * (lCB.size() - 1)))
     {
       
     }
@@ -124,15 +135,15 @@ public class LayerControl
     fill(#FFA600);
     if(lCB.size() < 1)
     {
-      rect(currentXPos, 360, 80, 60, 25);
+      rect(currentXPos, tYPos, 80, 60, 25);
     }
     else if(lCB.size() >= 1 && lCB.size() < layerVertLimit)
     {
-      rect(currentXPos, 360, 80, 60 + 50 * (lCB.size() - 1), 25);
+      rect(currentXPos, tYPos, 80, 60 + 50 * (lCB.size() - 1), 25);
     }
     else
     {
-      rect(currentXPos, 360, 80, 60 + 50 * (layerVertLimit - 1), 25);
+      rect(currentXPos, tYPos, 80, 60 + 50 * (layerVertLimit - 1), 25);
     }
     
     
@@ -142,18 +153,18 @@ public class LayerControl
       {
         
         lCB.get(i).setSize(60, 40 + 2 * (25 * (lCB.size() - 1) - i * 50 - verticalPosition + (30 + 25 * (layerVertLimit - 2)))   );
-        lCB.get(i).Show(currentXPos, 360 + 25 * (lCB.size() - 1) - i * 50 - verticalPosition, activeLayer);
+        lCB.get(i).Show(currentXPos, tYPos + 25 * (lCB.size() - 1) - i * 50 - verticalPosition, activeLayer);
       }
       else if(25 * (lCB.size() - 1) - i * 50 - verticalPosition >= (30 + 25 * (layerVertLimit - 2)))
       {
         
         lCB.get(i).setSize(60, 40 + 2 * (-1 * (25 * (lCB.size() - 1) - i * 50 - verticalPosition) + (30 + 25 * (layerVertLimit - 2)))   );
-        lCB.get(i).Show(currentXPos, 360 + 25 * (lCB.size() - 1) - i * 50 - verticalPosition, activeLayer);
+        lCB.get(i).Show(currentXPos, tYPos + 25 * (lCB.size() - 1) - i * 50 - verticalPosition, activeLayer);
       }
       else
       {
         lCB.get(i).setSize(60, 40);
-        lCB.get(i).Show(currentXPos, 360 + 25 * (lCB.size() - 1) - i * 50 - verticalPosition, activeLayer);
+        lCB.get(i).Show(currentXPos, tYPos + 25 * (lCB.size() - 1) - i * 50 - verticalPosition, activeLayer);
       }
       
     }

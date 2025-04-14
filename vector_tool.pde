@@ -66,6 +66,10 @@ void draw()
       lC.Add(objs.size() - 1);
       curLayer = objs.size() - 1;
     }
+    else if(key == 'ㅋ')
+    {
+      println("ㅋㅋㅋㅋ");
+    }
     else if(key == 'd')
     {
       for(int i = 0; i < objs.size(); i++)
@@ -236,5 +240,5 @@ public void Vt_Obj_Disable()
 
 void mouseWheel(MouseEvent event)
 {
-  lC.vertScroll(event.getCount() * 2);
+  lC.vertScroll(event.getCount() * 3);
 }
